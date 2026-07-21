@@ -1,33 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow: hidden;">
-  <foreignObject x="0" y="0" width="100%" height="100%">
-    <body xmlns="http://www.w3.org/1999/xhtml" style="margin:0;padding:0;overflow:hidden;background:#000;">
-      <script>
-        function launch() {
-          try {
-            fetch("https://cdn.jsdelivr.net/gh/sealiee11/arctic@main/index.html?t=" + Date.now())
-              .then(response => response.text())
-              .then(html => {
-                document.documentElement.innerHTML = html;
-
-                document.documentElement.querySelectorAll('script').forEach(oldScript => {
-                  const newScript = document.createElement('script');
-                  if (oldScript.src) {
-                    newScript.src = oldScript.src;
-                  } else {
-                    newScript.textContent = oldScript.textContent;
-                  }
-                  document.body.appendChild(newScript);
-                });
-              });
-          } catch (error) {
-            console.error('error:', error);
-          }
-        }
-        launch();
-      </script>
-      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-family:sans-serif;text-align:center;">
-        Loading Arctic...
-      </div>
-    </body>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 800 600">
+  
+  <!-- Content container required for HTML manipulation -->
+  <foreignObject width="100%" height="100%">
+    <div xmlns="http://www.w3.org/1999/xhtml" id="app-viewport" style="width:100%; height:100%;">
+      <!-- The fetched HTML content will inject here -->
+    </div>
   </foreignObject>
+
+  <!-- Embedded JavaScript Execution -->
+  <script type="text/javascript">
+    <![CDATA[
+    launch();
+
+    function launch() {
+      try {
+        fetch("https://cdn.jsdelivr.net/gh/sealiee11/arctic@main/index.html?t=" + Date.now())
+          .then(response => response.text())
+          .then(html => {
+            // Target the HTML container inside the foreignObject
+            const container = document.getElementById('app-viewport');
+            if (container) {
+              container.innerHTML = html;
+
+              // Extract and execute scripts within the context of the container
+              container.querySelectorAll('script').forEach(oldScript => {
+                const newScript = document.createElement('script');
+                if (oldScript.src) {
+                  newScript.src = oldScript.src;
+                } else {
+                  newScript.textContent = oldScript.textContent;
+                }
+                // Append directly to the document body so scripts execute properly
+                document.body.appendChild(newScript);
+              });
+            }
+          });
+      } catch (error) {
+        console.error('error:', error);
+      }
+    }
+    ]]>
+  </script>
+
 </svg>
